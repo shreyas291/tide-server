@@ -1,0 +1,5 @@
+id;name;code;created_by
+1;anonymous;anonymous;system
+2;administrator;admin;system
+3;user;user;system
+4;ROLE_ADMIN;ROLE_ADMIN;system
