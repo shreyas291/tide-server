@@ -1,3 +1,0 @@
-id;role_code;authority_name;created_by
-1;ROLE_ADMIN;ROLE_ADMIN;system
-2;user;app.user;system

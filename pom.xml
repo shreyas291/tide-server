@@ -60,8 +60,8 @@
 		<!-- The javassist version should match the one managed by https://mvnrepository.com/artifact/org.hibernate/hibernate-core/${hibernate.version} -->
 		<javassist.version>3.24.0-GA</javassist.version>
 		<!-- The liquibase version should match the one managed by https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/${spring-boot.version} -->
-		<liquibase.version>3.6.2</liquibase.version>
-		<liquibase-hibernate5.version>3.6</liquibase-hibernate5.version>
+		<liquibase.version>3.7.0</liquibase.version>
+		<liquibase-hibernate5.version>3.7</liquibase-hibernate5.version>
 		<validation-api.version>2.0.1.Final</validation-api.version>
 		<mapstruct.version>1.2.0.Final</mapstruct.version>
 		<jjwt.version>0.9.1</jjwt.version>
@@ -74,7 +74,7 @@
 		<maven-enforcer-plugin.version>3.0.0-M1</maven-enforcer-plugin.version>
 		<maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
 		<maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
-		<maven-war-plugin.version>3.2.0</maven-war-plugin.version>
+		<maven-war-plugin.version>3.2.3</maven-war-plugin.version>
 		<dockerfile-maven-plugin.version>1.4.0</dockerfile-maven-plugin.version>
 		<jacoco-maven-plugin.version>0.8.1</jacoco-maven-plugin.version>
 		<scala-maven-plugin.version>3.3.1</scala-maven-plugin.version>
