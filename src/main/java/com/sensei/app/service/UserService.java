@@ -20,7 +20,6 @@ import com.sensei.app.config.Constants;
 import com.sensei.app.domain.User;
 import com.sensei.app.repository.AuthorityRepository;
 import com.sensei.app.repository.UserRepository;
-import com.sensei.app.repository.search.UserSearchRepository;
 import com.sensei.app.security.SecurityUtils;
 import com.sensei.app.service.dto.UserDTO;
 import com.sensei.app.service.util.RandomUtil;
@@ -39,16 +38,13 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final UserSearchRepository userSearchRepository;
-
     private final AuthorityRepository authorityRepository;
 
     private final CacheManager cacheManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserSearchRepository userSearchRepository, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.userSearchRepository = userSearchRepository;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
     }

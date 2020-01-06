@@ -1,10 +1,33 @@
 package com.sensei.app.web.rest;
 
-import com.sensei.app.config.Constants;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.codahale.metrics.annotation.Timed;
+import com.sensei.app.config.Constants;
 import com.sensei.app.domain.User;
 import com.sensei.app.repository.UserRepository;
-import com.sensei.app.repository.search.UserSearchRepository;
 import com.sensei.app.security.AuthoritiesConstants;
 import com.sensei.app.service.MailService;
 import com.sensei.app.service.UserService;
@@ -15,26 +38,8 @@ import com.sensei.app.web.rest.errors.EmailAlreadyUsedException;
 import com.sensei.app.web.rest.errors.LoginAlreadyUsedException;
 import com.sensei.app.web.rest.util.HeaderUtil;
 import com.sensei.app.web.rest.util.PaginationUtil;
+
 import io.github.jhipster.web.util.ResponseUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing users.
@@ -72,14 +77,10 @@ public class UserResource {
 
     private final MailService mailService;
 
-    private final UserSearchRepository userSearchRepository;
-
-    public UserResource(UserService userService, UserRepository userRepository, MailService mailService, UserSearchRepository userSearchRepository) {
-
+    public UserResource(UserService userService, UserRepository userRepository, MailService mailService) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.mailService = mailService;
-        this.userSearchRepository = userSearchRepository;
     }
 
     /**
@@ -200,18 +201,4 @@ public class UserResource {
         return ResponseEntity.ok().headers(HeaderUtil.createAlert( "userManagement.deleted", login)).build();
     }
 
-    /**
-     * SEARCH /_search/users/:query : search for the User corresponding
-     * to the query.
-     *
-     * @param query the query to search
-     * @return the result of the search
-     */
-    @GetMapping("/_search/users/{query}")
-    @Timed
-    public List<User> search(@PathVariable String query) {
-        return StreamSupport
-            .stream(userSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
-    }
 }

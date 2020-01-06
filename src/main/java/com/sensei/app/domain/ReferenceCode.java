@@ -20,7 +20,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "reference_code")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "reference_code")
 public class ReferenceCode implements Serializable {
 
     private static final long serialVersionUID = 1L;
