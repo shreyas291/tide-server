@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.sensei.app.domain.Device;
 
-public interface DeviceRepository extends JpaRepository<Device, Integer> {
+public interface DeviceRepository extends JpaRepository<Device, Long> {
 
 }

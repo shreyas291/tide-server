@@ -3,45 +3,54 @@
  */
 package com.sensei.app.service.dto;
 
-import javax.persistence.Column;
-
-import com.sensei.app.domain.Device;
+import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * @author HP
  *
  */
-public class DeviceDTO {
+public class DeviceDTO implements Serializable{
 
-    private Integer id;
-    private String deviceName;      
- 	 private String serial; 	 
- 	 private String deviceType; 	   
- 	 private String gsmcid; 	   
- 	 private String gsmlac; 
- 	 private String lastUpdated;	
- 	 private String latitude;
- 	 private String mcc; 	
- 	 private String mnc; 	
- 	 private String versionCode; 	
- 	 private String versionNumber; 	
- 	 private String school; 	
- 	 private String encryptionKey;
- 	 
- 	 
-	public Integer getId() {
-        return id;
-    }
+	private static final long serialVersionUID = 1L;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    
+	private Long id;
+
+	private Integer version;
+
+	private String deviceName;
+
+	private String serial;
+
+	private String deviceType;
+
+	private LocalDate lastUpdated;
+
+	private double latitude;
+
+	private double langitude;
+
+	private String versionCode;
+
+	private float versionNumber;
+
+	private String school;
+
+	private String encryptionkey;
+
+	private String token;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getDeviceName() {
 		return deviceName;
 	}
-
 
 	public void setDeviceName(String deviceName) {
 		this.deviceName = deviceName;
@@ -63,68 +72,12 @@ public class DeviceDTO {
 		this.deviceType = deviceType;
 	}
 
-	public String getGsmcid() {
-		return gsmcid;
-	}
-
-	public void setGsmcid(String gsmcid) {
-		this.gsmcid = gsmcid;
-	}
-
-	public String getGsmlac() {
-		return gsmlac;
-	}
-
-	public void setGsmlac(String gsmlac) {
-		this.gsmlac = gsmlac;
-	}
-
-	public String getLastUpdated() {
-		return lastUpdated;
-	}
-
-	public void setLastUpdated(String lastUpdated) {
-		this.lastUpdated = lastUpdated;
-	}
-
-	public String getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
-
-	public String getMcc() {
-		return mcc;
-	}
-
-	public void setMcc(String mcc) {
-		this.mcc = mcc;
-	}
-
-	public String getMnc() {
-		return mnc;
-	}
-
-	public void setMnc(String mnc) {
-		this.mnc = mnc;
-	}
-
 	public String getVersionCode() {
 		return versionCode;
 	}
 
 	public void setVersionCode(String versionCode) {
 		this.versionCode = versionCode;
-	}
-
-	public String getVersionNumber() {
-		return versionNumber;
-	}
-
-	public void setVersionNumber(String versionNumber) {
-		this.versionNumber = versionNumber;
 	}
 
 	public String getSchool() {
@@ -135,22 +88,60 @@ public class DeviceDTO {
 		this.school = school;
 	}
 
-	public String getEncryptionKey() {
-		return encryptionKey;
+	public String getEncryptionkey() {
+		return encryptionkey;
 	}
 
-	public void setEncryptionKey(String encryptionKey) {
-		this.encryptionKey = encryptionKey;
+	public void setEncryptionkey(String encryptionkey) {
+		this.encryptionkey = encryptionkey;
 	}
 
-	@Override
-	public String toString() {
-		return "DeviceDTO [id=" + id + ", deviceName=" + deviceName + ", serial=" + serial + ", deviceType="
-				+ deviceType + ", gsmcid=" + gsmcid + ", gsmlac=" + gsmlac + ", lastUpdated=" + lastUpdated
-				+ ", latitude=" + latitude + ", mcc=" + mcc + ", mnc=" + mnc + ", versionCode=" + versionCode
-				+ ", versionNumber=" + versionNumber + ", school=" + school + ", encryptionKey=" + encryptionKey + "]";
+	public Integer getVersion() {
+		return version;
 	}
 
-	
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	public LocalDate getLastUpdated() {
+		return lastUpdated;
+	}
+
+	public void setLastUpdated(LocalDate lastUpdated) {
+		this.lastUpdated = lastUpdated;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLangitude() {
+		return langitude;
+	}
+
+	public void setLangitude(double langitude) {
+		this.langitude = langitude;
+	}
+
+	public float getVersionNumber() {
+		return versionNumber;
+	}
+
+	public void setVersionNumber(float versionNumber) {
+		this.versionNumber = versionNumber;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
 
 }

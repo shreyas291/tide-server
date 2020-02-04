@@ -4,11 +4,11 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
-   <!--  <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+   <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180520000001_added_entity_ReferenceCode.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180518095754_added_entity_Asset.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190118001_added_entity_Branch.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190118001_added_entity_Branchset.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190118001_added_entity_BranchsetBranch.xml" relativeToChangelogFile="false"/> -->
+    <include file="config/liquibase/changelog/20190118001_added_entity_BranchsetBranch.xml" relativeToChangelogFile="false"/> 
     <!-- Application releated xml files changelogs here -->
 </databaseChangeLog>

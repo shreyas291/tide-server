@@ -8,64 +8,67 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import com.codahale.metrics.annotation.Timed;
 import com.sensei.app.service.DeviceService;
-import com.sensei.app.service.dto.ApplicationStatusDTO;
 import com.sensei.app.service.dto.DeviceDTO;
-import com.sensei.app.service.dto.ErrorCode;
-import com.sensei.app.service.dto.ReferenceCodeDTO;
+import com.sensei.app.service.dto.StudentDTO;
+import com.sensei.app.service.impl.DeviceServiceImpl;
 import com.sensei.app.web.rest.util.HeaderUtil;
 import com.sensei.app.web.rest.util.PaginationUtil;
 
+import io.swagger.annotations.ApiParam;
+
 import javax.validation.Valid;
+
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
 public class DeviceResource {
-	private final Logger log = LoggerFactory.getLogger(ReferenceCodeResource.class);
+	
+	private final Logger log = LoggerFactory.getLogger(DeviceServiceImpl.class);
 
     private final DeviceService deviceService;
+    
     private static final String ENTITY_NAME = "Device";
 
-    
+
+ 
     public DeviceResource(DeviceService deviceService) {
-        this.deviceService = deviceService;
-    }
+		super();
+		this.deviceService = deviceService;
+	}
 
-    /**
-     * GET /devices : get all devices.
-     *
-     * @return the ResponseEntity with status 200 (OK) and with body all users
-     */
-    @GetMapping("/hi")
-    @Timed
-    public String Sample() {
-        return "Hello";
-    }
-
-    /**
+	/**
      * GET /devices : get all devices.
      *
      * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and with body all users
      */
-    @GetMapping("/devices")
+    @GetMapping("/device")
     @Timed    
-    public ResponseEntity<List<DeviceDTO>> getAllDevices(Pageable pageable){
+    public ResponseEntity<List<DeviceDTO>> getAllDevices(@ApiParam Pageable pageable){
     	log.debug("REST request to get device : {}", pageable);
-    	final Page<DeviceDTO> page = deviceService.getAllManagedDevices(pageable);
+    	 Page<DeviceDTO> page = deviceService.findall(pageable);
     	  HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/devices");
     	  return new ResponseEntity<>(page.getContent(),headers,HttpStatus.OK);
-    	  
-    	
     	
     }
+    
+    @GetMapping("/device/{id}")
+    @Timed    
+    public ResponseEntity<Optional<DeviceDTO>> getDevicesById(@PathVariable Long id){
+    	Optional<DeviceDTO> data=deviceService.findOne(id);
+    	return ResponseEntity.ok()
+				.headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, data.get().getId().toString()))
+				.body(data); 
+    }
+    
     
     /**
 	 * POST /saveDevice : Create a new Device.
@@ -79,26 +82,20 @@ public class DeviceResource {
 	 *             if the Location URI syntax is incorrect
 	 */
     
-    @PostMapping("/saveDevice")
-    @Timed
-    public ResponseEntity<DeviceDTO> addDevice(@Valid @RequestBody DeviceDTO deviceDTO) throws URISyntaxException {
-      if (deviceDTO.getId() != null) {
-    	  return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists",
-					"A new referenceCode cannot already have an ID")).body(null);
-      }
-     
-//      MultiValueMap<String,String> headers = new LinkedMultiValueMap<>();
-//      headers.add("Name", "Deepak");
-//      
-//      ApplicationStatusDTO<DeviceDTO> appStatus = new ApplicationStatusDTO<DeviceDTO>(deviceService.addDevice(deviceDTO));
-//      appStatus.setErrorCode(ErrorCode.Error_Success);
-      
-    	//return new ResponseEntity<ApplicationStatusDTO<DeviceDTO>>(appStatus, headers, HttpStatus.OK);
-      DeviceDTO result = deviceService.addDevice(deviceDTO);
-      return ResponseEntity.ok()
-				.headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, deviceDTO.getId().toString()))
-				.body(result);
-    }
+    @PostMapping("/device")
+	@Timed
+	public ResponseEntity<DeviceDTO> create( @RequestBody DeviceDTO deviceDTO)
+			throws URISyntaxException {
+		log.debug("REST request to save Device : {}", deviceDTO);
+		if (deviceDTO.getId() != null) {
+			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists",
+					"A new device cannot already have an ID")).body(null);
+		}
+		DeviceDTO result = deviceService.save(deviceDTO);
+		return ResponseEntity.created(new URI("/api/device/" + result.getId()))
+				.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
+	}
+	
     
     
     /**
@@ -108,9 +105,9 @@ public class DeviceResource {
 	 *            the id of the referenceCodeDTO to delete
 	 * @return the ResponseEntity with status 200 (OK)
 	 */
-    @DeleteMapping("/deleteDevice/{id}")
+    @DeleteMapping("/device/{id}")
     @Timed
-    public ResponseEntity<Void> deleteDevice(@PathVariable Integer id){
+    public ResponseEntity<Void> deleteDevice(@PathVariable Long id){
     	log.debug("REST request to delete Device : {}", id);
     	deviceService.delete(id);
 		return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
@@ -129,15 +126,17 @@ public class DeviceResource {
 	 * @throws URISyntaxException
 	 *             if the Location URI syntax is incorrect
 	 */
-    @PutMapping("/update-device")
+    @PutMapping("/device")
 	@Timed
 	public ResponseEntity<DeviceDTO> updateDevice(@Valid @RequestBody DeviceDTO deviceDTO)
 			throws URISyntaxException {
-		log.debug("REST request to update ReferenceCode : {}", deviceDTO);
-//		if (deviceDTO.getId() == null) {
-//			return addDevice(deviceDTO).getBody();
-//		}
-		DeviceDTO result = deviceService.addDevice(deviceDTO);
+		log.debug("REST request to update Device : {}", deviceDTO);
+	if (deviceDTO.getId() == null) {
+		return create(deviceDTO);
+		}
+	Optional<DeviceDTO> device=deviceService.findOne(deviceDTO.getId());
+	deviceDTO.setVersion(device.get().getVersion());
+		DeviceDTO result = deviceService.save(deviceDTO);
 		return ResponseEntity.ok()
 				.headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, deviceDTO.getId().toString()))
 				.body(result);

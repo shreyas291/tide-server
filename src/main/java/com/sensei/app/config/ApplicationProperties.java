@@ -206,4 +206,14 @@ public class ApplicationProperties {
 	public void setResourcePath(String resourcePath) {
 		this.resourcePath = resourcePath;
 	}
+//	
+//	private String geoLocation;
+//
+//	public String getGeoLocation() {
+//		return geoLocation;
+//	}
+//
+//	public void setGeoLocation(String geoLocation) {
+//		this.geoLocation = geoLocation;
+//	}
 }
