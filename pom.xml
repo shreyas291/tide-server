@@ -106,7 +106,7 @@
 		<sonar.sources>${project.basedir}/src/main/</sonar.sources>
 		<sonar.surefire.reportsPath>${project.testresult.directory}/surefire-reports</sonar.surefire.reportsPath>
 		<sonar.tests>${project.basedir}/src/test/</sonar.tests>
-		<aws-java-sdk.version>1.11.458</aws-java-sdk.version>
+		<aws-java-sdk.version>1.12.261</aws-java-sdk.version>
 
 		<!-- jhipster-needle-maven-property -->
 		
