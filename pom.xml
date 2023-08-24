@@ -65,7 +65,7 @@
 		<validation-api.version>2.0.1.Final</validation-api.version>
 		<mapstruct.version>1.2.0.Final</mapstruct.version>
 		<jjwt.version>0.9.1</jjwt.version>
-		<tika.version>1.22</tika.version>
+		<tika.version>1.28.3</tika.version>
 
 		<!-- Plugin versions -->
 		<maven-clean-plugin.version>3.0.0</maven-clean-plugin.version>
